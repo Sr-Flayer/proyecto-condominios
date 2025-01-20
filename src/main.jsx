@@ -1,10 +1,11 @@
-import React from 'react';
+ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import App from './App';
 import Dashboard from './Dashboard';
 import Ginquilino from './Dueño/gestionInquilino';
 import Portones from './Dueño/portones';
+import Renta from './Dueño/renta';
 import Multas from './Admin/multas';
 import Rusuario from './Admin/registroUsuario';
 import Avivienda from './Administracion/agregarVivienda';
@@ -28,7 +29,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/Administracion/agregarVivienda" element={<Avivienda />} />
         <Route path="/Administracion/gestionVivienda" element={<Gvivienda />} />
         <Route path="/Inquilino/adeudo" element={<Adeudo />} />
-        <Route path="/Inquilino/portonesM" element={<PortonesM />} />
+        <Route path="/Inquilino/portonesM" element={<PortonesM/>} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
