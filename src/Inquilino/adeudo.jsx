@@ -2,10 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Dropdown, DropdownButton, DropdownItem } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './tablita.css';
 
 function adeudo() {
     return (
-
+      <div>
 <Navbar expand="lg" bg="light" variant="light">
       <Dropdown>
         <DropdownButton variant="link" id="navbar-dropdown" title="Dropdown">
@@ -15,6 +16,59 @@ function adeudo() {
         </DropdownButton>
       </Dropdown>
     </Navbar>
+
+<div className="main-container">
+<div className="table-container">
+  {/* Fila 1 */}
+  <div className="table-row">
+    <div className="icon-container">
+      <i className="fas fa-image"></i>
+    </div>
+    <div className="details">
+      <p>Multa No. 1</p>
+      <p>Estado: <span className="status-paid">Pagado</span></p>
+      <p>Motivo: jadjhajfjasjdja sfj</p>
+    </div>
+    <div className="actions">
+      <i className="fas fa-check-circle"></i>
+    </div>
+  </div>
+
+  {/* Fila 2 */}
+  <div className="table-row">
+    <div className="icon-container">
+      <i className="fas fa-image"></i>
+    </div>
+    <div className="details">
+      <p>Renta No. 1</p>
+      <p>Estado: <span className="status-unpaid">Por pagar</span></p>
+      <p>Motivo: jadjhajfjasjdja sfj</p>
+    </div>
+    <div className="actions">
+      <i className="fas fa-money-bill-wave"></i>
+    </div>
+  </div>
+
+  {/* Fila 3 */}
+  <div className="table-row">
+    <div className="icon-container">
+      <i className="fas fa-image"></i>
+    </div>
+    <div className="details">
+      <p>Multa No. 2</p>
+      <p>Estado: <span className="status-unpaid">Por pagar</span></p>
+      <p>Motivo: jadjhajfjasjdja sfj</p>
+    </div>
+    <div className="actions">
+      <i className="fas fa-money-bill-wave"></i>
+    </div>
+  </div>
+
+  {/* Botón para agregar */}
+  <button className="add-button">+</button>
+</div>
+</div>
+</div>
     );
 }
 export default adeudo;

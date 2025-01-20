@@ -1,0 +1,84 @@
+.table-container {
+  background-image: url('background-image.jpg'); /* Agrega tu imagen de fondo aquí */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.table {
+  width: 90%;
+  max-width: 600px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.table-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+.icon {
+  font-size: 24px;
+}
+
+.details {
+  flex-grow: 1;
+  margin-left: 10px;
+}
+
+.details p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.multas {
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+}
+
+.edit-button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  color: #333;
+}
+
+.edit-button:hover {
+  color: #007bff;
+}
+
+.add-button {
+  margin-top: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  background-color: #0056b3;
+}
