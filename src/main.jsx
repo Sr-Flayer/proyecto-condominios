@@ -7,6 +7,7 @@ import Ginquilino from './Dueño/gestionInquilino';
 import Portones from './Dueño/portones';
 import Renta from './Dueño/renta';
 import Multas from './Admin/multas';
+import Notis from './Admin/notis';
 import Rusuario from './Admin/registroUsuario';
 import Avivienda from './Administracion/agregarVivienda';
 import Gvivienda from './Administracion/gestionVivienda';
@@ -25,11 +26,14 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/Dueño/portones" element={<Portones />} />
         <Route path="/Dueño/renta" element={<Renta />} />
         <Route path="/Admin/multas" element={<Multas />} />
+        <Route path="/Admin/notis" element={<Notis />} />
         <Route path="/Admin/registroUsuario" element={<Rusuario />} />
         <Route path="/Administracion/agregarVivienda" element={<Avivienda />} />
         <Route path="/Administracion/gestionVivienda" element={<Gvivienda />} />
         <Route path="/Inquilino/adeudo" element={<Adeudo />} />
         <Route path="/Inquilino/portonesM" element={<PortonesM/>} />
+        <Route path="/notificaciones/:departamento" element={<Notis />} />
+
       </Routes>
     </BrowserRouter>
   </React.StrictMode>

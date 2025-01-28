@@ -9,7 +9,6 @@
   /* Contenedor del formulario */
   .form-container {
     flex: 1;
-    background-image: url("/src/assets/departamento2.jpg"); /* Cambia 'fondo.jpg' por la ruta de tu imagen */
     background-size: cover;
     background-position: center;
     padding: 50px;
