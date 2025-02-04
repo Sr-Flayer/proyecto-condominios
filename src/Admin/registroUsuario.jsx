@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 
 function RegistroUsuario() {
+  
   const [nombre, setNombre] = useState('');
   const [nombreError, setNombreError] = useState(false);
 
@@ -27,6 +28,8 @@ function RegistroUsuario() {
 
   const [message, setMessage] = useState('');
   const [variant, setVariant] = useState('success');
+
+  
 
   // Validaciones
   const validateNombre = () => {

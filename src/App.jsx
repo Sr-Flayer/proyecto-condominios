@@ -1,8 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import "./index.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [telefono, setTelefono] = useState("");
+  const [correo, setCorreo] = useState("");
+  const [departamento, setDepartamento] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      const response = await fetch('http://localhost:4000/api/login', {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ telefono, correo, departamento }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Guardar el departamento en el almacenamiento local o en el estado de la aplicación
+        localStorage.setItem("departamento", data.departamento);
+        navigate("/Dashboard");
+      } else {
+        const errorData = await response.json();
+        setError(errorData.message || "Error al iniciar sesión");
+      }
+    } catch (error) {
+      setError("Error al conectar con el servidor");
+    }
+  };
+
   return (
     <div className="login-container">
       <div className="login-box">
@@ -24,21 +57,41 @@ const Login = () => {
             </svg>
           </div>
         </div>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="phone">No. teléfono:</label>
-            <input type="text" id="phone" className="input-field" />
+            <label htmlFor="telefono">No. teléfono:</label>
+            <input
+              type="text"
+              id="telefono"
+              className="input-field"
+              value={telefono}
+              onChange={(e) => setTelefono(e.target.value)}
+            />
           </div>
           <div className="form-group">
-            <label htmlFor="password">Contraseña:</label>
-            <input type="password" id="password" className="input-field" />
+            <label htmlFor="correo">Correo:</label>
+            <input
+              type="email"
+              id="correo"
+              className="input-field"
+              value={correo}
+              onChange={(e) => setCorreo(e.target.value)}
+            />
           </div>
-
-          <Link to="Dashboard">
+          <div className="form-group">
+            <label htmlFor="departamento">Departamento:</label>
+            <input
+              type="number"
+              id="departamento"
+              className="input-field"
+              value={departamento}
+              onChange={(e) => setDepartamento(e.target.value)}
+            />
+          </div>
+          {error && <p className="error-message">{error}</p>}
           <button type="submit" className="submit-button">
             Iniciar sesión
           </button>
-          </Link>
         </form>
       </div>
     </div>

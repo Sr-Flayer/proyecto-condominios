@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Dropdown, DropdownButton, DropdownItem } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import NotificationButton from '../NotificationButton';
 import './tablita.css';
 
 function adeudo() {
+
+  const [departamento, setDepartamento] = useState("");
+  
+      useEffect(() => {
+        const dep = localStorage.getItem("departamento");
+        if (dep) {
+          setDepartamento(dep);
+        }
+      }, []);
+
     return (
       <div>
 <Navbar expand="lg" bg="light" variant="light">
@@ -15,6 +26,9 @@ function adeudo() {
           <Dropdown.Item as={Link} to="/Inquilino/portonesM">Mis Portones</Dropdown.Item>
         </DropdownButton>
       </Dropdown>
+      <Nav className="ms-auto">
+            {departamento && <NotificationButton departamento={departamento} />}
+          </Nav>
     </Navbar>
 
 <div className="main-container">

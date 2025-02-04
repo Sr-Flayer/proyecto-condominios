@@ -1,7 +1,6 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background-image: url("/src/assets/departamento.JPG"); /* Reemplaza con la URL de tu imagen */
   background-size: cover;
   background-position: center;
   height: 100vh;

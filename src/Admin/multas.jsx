@@ -11,6 +11,8 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 function Multas() {
+  
+
   const [departamento, setDepartamento] = useState('');
   const [departamentoError, setDepartamentoError] = useState(false);
 
