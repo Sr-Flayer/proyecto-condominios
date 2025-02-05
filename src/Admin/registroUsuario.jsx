@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Navbar, Nav, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import {
   Container,
   Box,
@@ -8,8 +10,16 @@ import {
   Button,
   Alert,
 } from '@mui/material';
+import NotificationButton from '../NotificationButton';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-function RegistroUsuario() {
+function RegistroUsuario() {  
+      useEffect(() => {
+        const dep = localStorage.getItem("departamento");
+        if (dep) {
+          setDepartamento(dep);
+        }
+      }, []);
   
   const [nombre, setNombre] = useState('');
   const [nombreError, setNombreError] = useState(false);
@@ -68,7 +78,7 @@ function RegistroUsuario() {
     }
 
     try {
-      const response = await fetch('http://localhost:4000/api/insertar_usuario', {
+      const response = await fetch('https://api-condominios-noti.onrender.com/api/insertar_usuario', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ nombre, apellido, telefono, departamento, correo }),
@@ -95,6 +105,22 @@ function RegistroUsuario() {
   };
 
   return (
+
+    <div>
+
+<Navbar expand="lg" bg="light" variant="light">
+      <Dropdown>
+        <DropdownButton variant="link" id="navbar-dropdown" title="Dropdown">
+          <Dropdown.Item as={Link} to="/Dashboard">Inicio</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/Admin/multas">Multa</Dropdown.Item>
+          <Dropdown.Item as={Link} to="/Admin/registroUsuario">Registrar Usuarios</Dropdown.Item>
+        </DropdownButton>
+      </Dropdown>
+      <Nav className="ms-auto">
+            {departamento && <NotificationButton departamento={departamento} />}
+          </Nav>
+    </Navbar>
+
     <Container component="main" maxWidth="sm">
       <Box
         sx={{
@@ -196,6 +222,7 @@ function RegistroUsuario() {
         )}
       </Box>
     </Container>
+    </div>
   );
 }
 

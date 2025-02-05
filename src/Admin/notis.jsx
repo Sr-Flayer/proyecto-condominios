@@ -17,7 +17,7 @@ const Notis = () => {
           throw new Error('Departamento no especificado.');
         }
 
-        const response = await fetch(`http://localhost:4000/api/notificaciones/${departamento}`);
+        const response = await fetch(`https://api-condominios-noti.onrender.com/api/notificaciones/${departamento}`);
 
         if (!response.ok) {
           throw new Error('Error al obtener notificaciones');
@@ -40,7 +40,7 @@ const Notis = () => {
     const ids = notificaciones.map((n) => n._id);
 
     try {
-      const response = await fetch('http://localhost:4000/api/notificaciones/eliminar', {
+      const response = await fetch('https://api-condominios-noti.onrender.com/api/notificaciones/eliminar', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

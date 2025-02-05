@@ -1,10 +1,22 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Navbar, Nav, Dropdown, DropdownButton, DropdownItem } from 'react-bootstrap';
+import { Navbar, Nav, Dropdown, DropdownButton } from 'react-bootstrap';
 import './tablita.css';
+import NotificationButton from '../NotificationButton';
+
 
 function gestionInquilino() {
+
+  const [departamento, setDepartamento] = useState("");
+    
+        useEffect(() => {
+          const dep = localStorage.getItem("departamento");
+          if (dep) {
+            setDepartamento(dep);
+          }
+        }, []);
+
   return (
     <div>
     <Navbar expand="lg" bg="light" variant="light">
@@ -16,6 +28,9 @@ function gestionInquilino() {
           <Dropdown.Item as={Link} to="/Dueño/renta">Renta</Dropdown.Item>
         </DropdownButton>
       </Dropdown>
+      <Nav className="ms-auto">
+            {departamento && <NotificationButton departamento={departamento} />}
+          </Nav>
     </Navbar>
 
 <div className="table-container">

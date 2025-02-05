@@ -1,9 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, Dropdown, DropdownButton, DropdownItem } from 'react-bootstrap';
+import { Navbar, Nav, Dropdown, DropdownButton } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NotificationButton from '../NotificationButton';
-
 import './tablita.css';
 
 function portonesM() {

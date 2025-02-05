@@ -1,10 +1,21 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Navbar, Dropdown, DropdownButton, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './tabla.css';
+import NotificationButton from '../NotificationButton';
 
 function GestionVivienda() {
+
+  const [departamento, setDepartamento] = useState("");
+      
+          useEffect(() => {
+            const dep = localStorage.getItem("departamento");
+            if (dep) {
+              setDepartamento(dep);
+            }
+          }, []);
+
   return (
     <div>
       {/* Navbar con Dropdown */}
@@ -16,6 +27,9 @@ function GestionVivienda() {
             <Dropdown.Item as={Link} to="/Administracion/agregarVivienda">Agregar Viviendas</Dropdown.Item>
           </DropdownButton>
         </Dropdown>
+        <Nav className="ms-auto">
+            {departamento && <NotificationButton departamento={departamento} />}
+          </Nav>
       </Navbar>
 
       {/* Contenido principal */}

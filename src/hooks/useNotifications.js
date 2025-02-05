@@ -9,7 +9,7 @@ export function useNotifications(departamento) {
 
     const fetchNotifications = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/api/notificaciones/${departamento}`);
+        const response = await axios.get(`https://api-condominios-noti.onrender.com/api/notificaciones/${departamento}`);
         setNotifications(Array.isArray(response.data) ? response.data : []);
       } catch (error) {
         console.error('Error fetching notifications:', error);

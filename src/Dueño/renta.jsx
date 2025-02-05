@@ -1,10 +1,20 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Navbar, Nav, Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router-dom'; // Importa Link
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Formulario.css';
+import NotificationButton from '../NotificationButton';
+
 
 function renta() {
+  const [departamento, setDepartamento] = useState("");
+  
+      useEffect(() => {
+        const dep = localStorage.getItem("departamento");
+        if (dep) {
+          setDepartamento(dep);
+        }
+      }, []);
   return (
     <div>
       {/* Navbar */}
@@ -17,6 +27,9 @@ function renta() {
             <Dropdown.Item as={Link} to="/Dueño/renta">Renta</Dropdown.Item>
           </DropdownButton>
         </Dropdown>
+        <Nav className="ms-auto">
+            {departamento && <NotificationButton departamento={departamento} />}
+          </Nav>
       </Navbar>
 
       

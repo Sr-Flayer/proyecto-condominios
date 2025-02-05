@@ -1,10 +1,22 @@
-import React from 'react';
-import { Navbar, Dropdown, DropdownButton } from 'react-bootstrap';
+import React, {useEffect, useState} from 'react';
+import { Navbar, Dropdown, DropdownButton, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './tablita.css';
+import NotificationButton from '../NotificationButton';
+
 
 function Portones() {
+
+  const [departamento, setDepartamento] = useState("");
+    
+        useEffect(() => {
+          const dep = localStorage.getItem("departamento");
+          if (dep) {
+            setDepartamento(dep);
+          }
+        }, []);
+
   return (
 
   <div>
@@ -17,6 +29,9 @@ function Portones() {
           <Dropdown.Item as={Link} to="/Dueño/renta">Renta</Dropdown.Item>
         </DropdownButton>
       </Dropdown>
+      <Nav className="ms-auto">
+            {departamento && <NotificationButton departamento={departamento} />}
+          </Nav>
     </Navbar>
 
 <div className="main-container">
