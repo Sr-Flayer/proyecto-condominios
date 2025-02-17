@@ -13,6 +13,7 @@ import Avivienda from './Administracion/agregarVivienda';
 import Gvivienda from './Administracion/gestionVivienda';
 import Adeudo from './Inquilino/adeudo';
 import PortonesM from './Inquilino/portonesM';
+import Dashboardu from './dashboard_usuario';
 import './index.css';
 
 
@@ -22,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/Dashboard" element={<Dashboard />} />
+        <Route path="/dashboard_usuario" element={<Dashboardu />} />
         <Route path="/Dueño/gestionInquilino" element={<Ginquilino />} />
         <Route path="/Dueño/portones" element={<Portones />} />
         <Route path="/Dueño/renta" element={<Renta />} />

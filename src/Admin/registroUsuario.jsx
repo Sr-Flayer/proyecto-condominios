@@ -2,13 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import {
-  Container,
-  Box,
-  Grid,
-  Typography,
-  TextField,
-  Button,
-  Alert,
+  Container, Box, Grid, Typography, TextField, Button, Alert, MenuItem, FormControl, InputLabel, Select
 } from '@mui/material';
 import NotificationButton from '../NotificationButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -36,6 +30,9 @@ function RegistroUsuario() {
   const [correo, setCorreo] = useState('');
   const [correoError, setCorreoError] = useState(false);
 
+  const [rol, setRol] = useState('');
+  const [RolError, setRolError] = useState(false);
+
   const [message, setMessage] = useState('');
   const [variant, setVariant] = useState('success');
 
@@ -62,6 +59,10 @@ function RegistroUsuario() {
     setCorreoError(!correo.trim());
   };
 
+  const validateRol = () => {
+    setRolError(!rol.trim())
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     validateNombre();
@@ -69,9 +70,10 @@ function RegistroUsuario() {
     validateTelefono();
     validateDepartamento();
     validateCorreo();
+    validateRol();
 
     // Verificar si hay errores después de las validaciones
-    if (nombreError || apellidoError || telefonoError || departamentoError || correoError) {
+    if (nombreError || apellidoError || telefonoError || departamentoError || correoError || RolError) {
       setMessage('Por favor, corrija los errores antes de enviar.');
       setVariant('error');
       return;
@@ -81,7 +83,7 @@ function RegistroUsuario() {
       const response = await fetch('https://api-condominios-noti.onrender.com/api/insertar_usuario', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre, apellido, telefono, departamento, correo }),
+        body: JSON.stringify({ nombre, apellido, telefono, departamento, correo, rol }),
       });
 
       if (response.ok) {
@@ -92,6 +94,7 @@ function RegistroUsuario() {
         setTelefono('');
         setDepartamento('');
         setCorreo('');
+        setRol('');
       } else {
         const data = await response.json();
         setMessage(data.message || 'Error al registrar el usuario.');
@@ -205,6 +208,21 @@ function RegistroUsuario() {
                 required
               />
             </Grid>
+
+            <Grid item xs={12}>
+        <FormControl fullWidth>
+          <InputLabel id="rol-label">Rol</InputLabel>
+          <Select
+            labelId="rol-label"
+            id="rol"
+            value={rol}
+            onChange={(e) => setRol(e.target.value)}
+          >
+            <MenuItem value="usuario">Usuario</MenuItem>
+            <MenuItem value="admin">Admininstrador</MenuItem>
+          </Select>
+        </FormControl>
+      </Grid>
           </Grid>
           <Button
             type="submit"

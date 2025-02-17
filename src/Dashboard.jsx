@@ -6,13 +6,14 @@ import NotificationButton from './NotificationButton';
 
   function Dashboard() {
     const [departamento, setDepartamento] = useState("");
+    const [token, setToken] = useState("");  // Estado para el token
+    const [rol, setRoles] = useState("");
 
     useEffect(() => {
-      const dep = localStorage.getItem("departamento");
-      if (dep) {
-        setDepartamento(dep);
-      }
-    }, []);
+      console.log("Token en localStorage:", localStorage.getItem("token"));
+      console.log("Departamento en localStorage:", localStorage.getItem("departamento"));
+      console.log("Rol en localStorage:", localStorage.getItem("rol"));
+  }, []);
 
   return (
     <>
@@ -20,7 +21,7 @@ import NotificationButton from './NotificationButton';
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <DropdownButton variant="link" id="navbar-dropdown" title="Menú">
+            <DropdownButton variant="button" id="navbar-dropdown" title="Menú">
               <Dropdown.Item as={Link} to="/Dueño/gestionInquilino">
                 Dueño
               </Dropdown.Item>
@@ -29,9 +30,6 @@ import NotificationButton from './NotificationButton';
               </Dropdown.Item>
               <Dropdown.Item as={Link} to="/Administracion/gestionVivienda">
                 Administración
-              </Dropdown.Item>
-              <Dropdown.Item as={Link} to="/Inquilino/adeudo">
-                Inquilino
               </Dropdown.Item>
             </DropdownButton>
           </Nav>
@@ -43,7 +41,7 @@ import NotificationButton from './NotificationButton';
       </Navbar>
 
       <div className="container mt-4">
-        <h1>Bienvenido al Dashboard</h1>
+        <h1>Bienvenido al Dashboard de Administrador</h1>
       </div>
     </>
   );

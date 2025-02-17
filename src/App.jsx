@@ -13,20 +13,32 @@ const Login = () => {
     e.preventDefault();
     setError("");
 
-    try {
+    try {//https://api-condominios-noti.onrender.com/api/login http://localhost:4000/api/login
       const response = await fetch('https://api-condominios-noti.onrender.com/api/login', {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          
         },
         body: JSON.stringify({ telefono, correo, departamento }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        // Guardar el departamento en el almacenamiento local o en el estado de la aplicación
+        console.log("Datos recibidos:", data); // Verifica qué datos devuelve la API
+
+        
+        // Guardar datos en localStorage
+        localStorage.setItem("token", data.token);
         localStorage.setItem("departamento", data.departamento);
-        navigate("/Dashboard");
+        localStorage.setItem("rol", data.rol);
+
+        console.log("Token almacenado:", data.token);
+        console.log("Rol almacenado:", data.rol);
+
+        // Redirigir según el rol
+        navigate(data.rol === "admin" ? "/Dashboard" : "/dashboard_usuario");
+
       } else {
         const errorData = await response.json();
         setError(errorData.message || "Error al iniciar sesión");
