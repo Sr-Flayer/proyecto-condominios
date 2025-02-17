@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Navbar, Dropdown, DropdownButton, Nav } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './tabla.css';
@@ -8,13 +8,29 @@ import NotificationButton from '../NotificationButton';
 function GestionVivienda() {
 
   const [departamento, setDepartamento] = useState("");
-      
-          useEffect(() => {
-            const dep = localStorage.getItem("departamento");
-            if (dep) {
-              setDepartamento(dep);
-            }
-          }, []);
+  const [token, setToken] = useState("");  // Estado para el token
+  const [rol, setRoles] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const dep = localStorage.getItem("departamento");
+    const storedToken = localStorage.getItem("token");
+    const roles = localStorage.getItem("rol");
+    
+    if (dep) {
+      setDepartamento(dep);
+    }
+    if (roles){
+      setRoles(roles);
+    }
+    if (storedToken) {
+      setToken(storedToken); // Guardamos el token
+    } else {
+      // Si no hay token, redirige al login
+      console.log("No hay token, redirigiendo...");
+      navigate("/");
+    }
+  }, [navigate]);
 
   return (
     <div>

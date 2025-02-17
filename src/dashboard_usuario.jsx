@@ -26,7 +26,7 @@ function Dashboardu() {
     } else {
       // Si no hay token, redirige al login
       console.log("No hay token, redirigiendo...");
-      navigate("/App");
+      navigate("/");
     }
   }, [navigate]);
 

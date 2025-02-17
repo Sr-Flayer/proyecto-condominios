@@ -17,12 +17,28 @@ import Modal from "../Components/Modal";
 
 function Multas() {
   const [departamento, setDepartamento] = useState("");
-  useEffect(() => {
-    const dep = localStorage.getItem("departamento");
-    if (dep) {
-      setDepartamento(dep);
-    }
-  }, []);
+    const [token, setToken] = useState("");  // Estado para el token
+    const [rol, setRoles] = useState("");
+      
+    useEffect(() => {
+      const dep = localStorage.getItem("departamento");
+      const storedToken = localStorage.getItem("token");
+      const roles = localStorage.getItem("rol");
+      
+      if (dep) {
+        setDepartamento(dep);
+      }
+      if (roles){
+        setRoles(roles);
+      }
+      if (storedToken) {
+        setToken(storedToken); // Guardamos el token
+      } else {
+        // Si no hay token, redirige al login
+        console.log("No hay token, redirigiendo...");
+        navigate("/");
+      }
+    }, [navigate]);
 
   const [motivoMulta, setMotivoMulta] = useState("");
   const [multa, setMulta] = useState("");

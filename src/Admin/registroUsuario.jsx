@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Dropdown, DropdownButton } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
   Container, Box, Grid, Typography, TextField, Button, Alert, MenuItem, FormControl, InputLabel, Select
 } from '@mui/material';
@@ -8,12 +8,6 @@ import NotificationButton from '../NotificationButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function RegistroUsuario() {  
-      useEffect(() => {
-        const dep = localStorage.getItem("departamento");
-        if (dep) {
-          setDepartamento(dep);
-        }
-      }, []);
   
   const [nombre, setNombre] = useState('');
   const [nombreError, setNombreError] = useState(false);
@@ -36,6 +30,22 @@ function RegistroUsuario() {
   const [message, setMessage] = useState('');
   const [variant, setVariant] = useState('success');
 
+  const [token, setToken] = useState("");  // Estado para el token
+        const navigate = useNavigate();
+      
+        useEffect(() => {
+          const dep = localStorage.getItem("departamento");
+          const storedToken = localStorage.getItem("token");
+          const roles = localStorage.getItem("rol");
+          
+          if (storedToken) {
+            setToken(storedToken); // Guardamos el token
+          } else {
+            // Si no hay token, redirige al login
+            console.log("No hay token, redirigiendo...");
+            navigate("/");
+          }
+        }, [navigate]);
   
 
   // Validaciones

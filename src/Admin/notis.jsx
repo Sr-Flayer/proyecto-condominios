@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Box, Typography, List, ListItem, ListItemText, Alert, Button } from '@mui/material';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Notis = () => {
   const location = useLocation();
@@ -9,6 +9,29 @@ const Notis = () => {
 
   const [notificaciones, setNotificaciones] = useState([]);
   const [error, setError] = useState('');
+    const [token, setToken] = useState("");  // Estado para el token
+    const [rol, setRoles] = useState("");
+    const navigate = useNavigate();
+  
+    useEffect(() => {
+      const dep = localStorage.getItem("departamento");
+      const storedToken = localStorage.getItem("token");
+      const roles = localStorage.getItem("rol");
+      
+      if (dep) {
+        setDepartamento(dep);
+      }
+      if (roles){
+        setRoles(roles);
+      }
+      if (storedToken) {
+        setToken(storedToken); // Guardamos el token
+      } else {
+        // Si no hay token, redirige al login
+        console.log("No hay token, redirigiendo...");
+        navigate("/");
+      }
+    }, [navigate]);
 
   useEffect(() => {
     const fetchNotificaciones = async () => {

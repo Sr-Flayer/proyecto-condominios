@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Navbar, Dropdown, DropdownButton, Nav } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './tablita.css';
 import NotificationButton from '../NotificationButton';
@@ -9,13 +9,29 @@ import NotificationButton from '../NotificationButton';
 function Portones() {
 
   const [departamento, setDepartamento] = useState("");
+  const [token, setToken] = useState("");  // Estado para el token
+  const [rol, setRoles] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const dep = localStorage.getItem("departamento");
+    const storedToken = localStorage.getItem("token");
+    const roles = localStorage.getItem("rol");
     
-        useEffect(() => {
-          const dep = localStorage.getItem("departamento");
-          if (dep) {
-            setDepartamento(dep);
-          }
-        }, []);
+    if (dep) {
+      setDepartamento(dep);
+    }
+    if (roles){
+      setRoles(roles);
+    }
+    if (storedToken) {
+      setToken(storedToken); // Guardamos el token
+    } else {
+      // Si no hay token, redirige al login
+      console.log("No hay token, redirigiendo...");
+      navigate("/");
+    }
+  }, [navigate]);
 
   return (
 

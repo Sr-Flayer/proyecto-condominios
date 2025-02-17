@@ -27,7 +27,8 @@ const Login = () => {
         const data = await response.json();
         console.log("Datos recibidos:", data); // Verifica qué datos devuelve la API
 
-        
+    
+
         // Guardar datos en localStorage
         localStorage.setItem("token", data.token);
         localStorage.setItem("departamento", data.departamento);
