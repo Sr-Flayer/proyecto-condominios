@@ -61,7 +61,7 @@ function Cambiar_contra() {
         },
         body: JSON.stringify({ userId: telefono }),
       });
-      localStorage.removeItem("token");
+      localStorage.removeItem("permanentToken");
       navigate("/");
     } catch (error) {
       console.error("Error al cerrar sesión en todos los dispositivos", error);

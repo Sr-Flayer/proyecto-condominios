@@ -49,24 +49,15 @@ function Multas() {
 
     setLoading(true);
 
-    useEffect(() => {
-      const storedToken = localStorage.getItem("token");
-      
-      if (storedToken) {
-        setToken(storedToken); // Guardamos el token
-      } else {
-        // Si no hay token, redirige al login
-        console.log("No hay token, redirigiendo...");
-        navigate("/");
-      }
-    }, [navigate]);
+    
     
     try {
       const response = await fetch(
-        "https://api-condominios-noti.onrender.com/api/insertar_multas",
+        "http://localhost:4000/api/insertar_multas",
         {
           method: "POST",
-          headers: { 'Authorization': `Bearer ${token}`, "Content-Type": "application/json"
+          headers: { 'Authorization': `Bearer ${token}`, 
+          "Content-Type": "application/json"
             
           },
           body: JSON.stringify({ departamento, motivoMulta, multa }),
