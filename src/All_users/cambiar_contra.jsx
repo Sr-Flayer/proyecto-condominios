@@ -28,7 +28,7 @@ function Cambiar_contra() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:4000/api/cambiar-contra', {
+      const response = await fetch('https://api-condominios-noti.onrender.com/api/cambiar-contra', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -54,7 +54,7 @@ function Cambiar_contra() {
 
   const handleLogoutAll = async () => {
     try {
-      await fetch('http://localhost:4000/api/logout-all-devices', {
+      await fetch('https://api-condominios-noti.onrender.com/api/logout-all-devices', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

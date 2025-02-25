@@ -30,7 +30,7 @@ const Login = () => {
       setRememberDevice(remember); // Guardar la elección del usuario
 
     try {//https://api-condominios-noti.onrender.com/api/login http://localhost:4000/api/login
-      const response = await fetch('http://localhost:4000/api/login', {
+      const response = await fetch('https://api-condominios-noti.onrender.com/api/login', {
         method: "POST",
         headers: {"Content-Type": "application/json" },
         body: JSON.stringify({ telefono, contra, departamento, rememberDevice: remember }),

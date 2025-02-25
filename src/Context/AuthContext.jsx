@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (credentials) => {
         try {
-            const response = await fetch('http://localhost:4000/api/verifyToken', {
+            const response = await fetch('https://api-condominios-noti.onrender.com/api/verifyToken', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(credentials),

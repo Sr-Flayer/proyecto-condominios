@@ -5,7 +5,7 @@ const checkSession = async (navigate) => {
 
   if (permanentToken) {
     try {
-      const response = await fetch("http://localhost:4000/api/verify-permanent", {
+      const response = await fetch("https://api-condominios-noti.onrender.com/api/verify-permanent", {
         method: "POST",
         headers: { "Authorization": `Bearer ${permanentToken}` },
       });

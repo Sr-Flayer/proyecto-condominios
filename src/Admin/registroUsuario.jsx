@@ -90,7 +90,7 @@ function RegistroUsuario() {
     }
 
     try {
-      const response = await fetch('http://localhost:4000/api/insertar_usuario', {
+      const response = await fetch('https://api-condominios-noti.onrender.com/api/insertar_usuario', {
         method: 'POST',
         headers: {'Authorization': `Bearer ${token}`,
            'Content-Type': 'application/json' },
