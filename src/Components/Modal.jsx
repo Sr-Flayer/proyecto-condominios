@@ -1,15 +1,17 @@
 import React from "react";
 import { CSSTransition } from "react-transition-group";
-import "../Styles/Modal.css"; // Asegúrate de agregar estilos para la animación
+import "../Styles/Modal.css"; 
 
-const Modal = ({ show, onClose, message, isSuccess }) => {
+const Modal = ({ show, onClose, message, isSuccess, children }) => {
   return (
     <CSSTransition in={show} timeout={300} classNames="modal" unmountOnExit>
       <div className="modal-overlay" onClick={onClose}>
         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-          <h2>{isSuccess ? "Éxito" : "Error"}</h2>
+          <h2>{isSuccess ? "Confirmación" : "Error"}</h2>
           <p>{message}</p>
-          <button onClick={onClose}>Cerrar</button>
+          <div className="modal-actions">
+            {children}
+          </div>
         </div>
       </div>
     </CSSTransition>

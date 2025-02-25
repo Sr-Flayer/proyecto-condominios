@@ -3,13 +3,17 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Navbar, Nav, Dropdown, DropdownButton } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NotificationButton from './NotificationButton';
+import checkSession from "./Context/checkSession.jsx";
+
 
 function Dashboard() {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
     const [departamento, setDepartamento] = useState("");
     const [rol, setRoles] = useState("");
 
     useEffect(() => {
+    checkSession(navigate); // Verificar sesión al cargar la página
+  
         const token = localStorage.getItem("token");
         const storedDepartamento = localStorage.getItem("departamento");
         const storedRol = localStorage.getItem("rol");
@@ -30,9 +34,10 @@ function Dashboard() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <DropdownButton variant="button" id="navbar-dropdown" title="Menú">
-                            <Dropdown.Item as={Link} to="/Dueño/gestionInquilino">Dueño</Dropdown.Item>
                             <Dropdown.Item as={Link} to="/Admin/registroUsuario">Administrador</Dropdown.Item>
                             <Dropdown.Item as={Link} to="/Administracion/gestionVivienda">Administración</Dropdown.Item>
+                            <Dropdown.Item as={Link} to="/All_users/cambiar_contra">Cambiar Contraseña</Dropdown.Item>
+
                         </DropdownButton>
                     </Nav>
 

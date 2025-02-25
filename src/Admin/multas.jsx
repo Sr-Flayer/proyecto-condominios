@@ -16,29 +16,11 @@ import NotificationButton from "../NotificationButton";
 import Modal from "../Components/Modal";
 
 function Multas() {
+  
   const [departamento, setDepartamento] = useState("");
-    const [token, setToken] = useState("");  // Estado para el token
-    const [rol, setRoles] = useState("");
+  const [token, setToken] = useState("");  // Estado para el token
+  const [rol, setRoles] = useState("");
       
-    useEffect(() => {
-      const dep = localStorage.getItem("departamento");
-      const storedToken = localStorage.getItem("token");
-      const roles = localStorage.getItem("rol");
-      
-      if (dep) {
-        setDepartamento(dep);
-      }
-      if (roles){
-        setRoles(roles);
-      }
-      if (storedToken) {
-        setToken(storedToken); // Guardamos el token
-      } else {
-        // Si no hay token, redirige al login
-        console.log("No hay token, redirigiendo...");
-        navigate("/");
-      }
-    }, [navigate]);
 
   const [motivoMulta, setMotivoMulta] = useState("");
   const [multa, setMulta] = useState("");
@@ -46,8 +28,10 @@ function Multas() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
-
   const navigate = useNavigate();
+
+
+  
 
   const validateInput = () => {
     return departamento.trim() && motivoMulta.trim() && parseFloat(multa) > 0;
@@ -65,16 +49,31 @@ function Multas() {
 
     setLoading(true);
 
+    useEffect(() => {
+      const storedToken = localStorage.getItem("token");
+      
+      if (storedToken) {
+        setToken(storedToken); // Guardamos el token
+      } else {
+        // Si no hay token, redirige al login
+        console.log("No hay token, redirigiendo...");
+        navigate("/");
+      }
+    }, [navigate]);
+    
     try {
       const response = await fetch(
         "https://api-condominios-noti.onrender.com/api/insertar_multas",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: { 'Authorization': `Bearer ${token}`, "Content-Type": "application/json"
+            
+          },
           body: JSON.stringify({ departamento, motivoMulta, multa }),
         }
       );
-
+      
+     
       setLoading(false);
 
       if (response.ok) {
@@ -101,7 +100,7 @@ function Multas() {
     <div>
       <Navbar expand="lg" bg="light" variant="light">
         <Dropdown>
-          <DropdownButton variant="link" id="navbar-dropdown" title="Menú">
+          <DropdownButton variant="button" id="navbar-dropdown" title="Menú">
             <Dropdown.Item as={Link} to="/Dashboard">Inicio</Dropdown.Item>
             <Dropdown.Item as={Link} to="/Admin/multas">Multa</Dropdown.Item>
             <Dropdown.Item as={Link} to="/Admin/registroUsuario">Registrar Usuarios</Dropdown.Item>

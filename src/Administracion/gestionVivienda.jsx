@@ -13,16 +13,9 @@ function GestionVivienda() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const dep = localStorage.getItem("departamento");
-    const storedToken = localStorage.getItem("token");
-    const roles = localStorage.getItem("rol");
     
-    if (dep) {
-      setDepartamento(dep);
-    }
-    if (roles){
-      setRoles(roles);
-    }
+    const storedToken = localStorage.getItem("token");
+    
     if (storedToken) {
       setToken(storedToken); // Guardamos el token
     } else {

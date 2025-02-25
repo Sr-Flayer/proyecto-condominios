@@ -14,7 +14,9 @@ import Gvivienda from './Administracion/gestionVivienda';
 import Adeudo from './Inquilino/adeudo';
 import PortonesM from './Inquilino/portonesM';
 import Dashboardu from './dashboard_usuario';
+import Cambiar_contra from './All_users/cambiar_contra';
 import './index.css';
+import Dashboard_dueno from './dashboard_dueno';
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -24,6 +26,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/" element={<App />} />
         <Route path="/Dashboard" element={<Dashboard />} />
         <Route path="/dashboard_usuario" element={<Dashboardu />} />
+        <Route path="/dashboard_dueno" element={<Dashboard_dueno />} />
         <Route path="/Dueño/gestionInquilino" element={<Ginquilino />} />
         <Route path="/Dueño/portones" element={<Portones />} />
         <Route path="/Dueño/renta" element={<Renta />} />
@@ -35,6 +38,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/Inquilino/adeudo" element={<Adeudo />} />
         <Route path="/Inquilino/portonesM" element={<PortonesM/>} />
         <Route path="/notificaciones/:departamento" element={<Notis />} />
+        <Route path="/All_users/cambiar_contra" element={<Cambiar_contra />} />
 
       </Routes>
     </BrowserRouter>

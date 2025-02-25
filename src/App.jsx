@@ -1,44 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./index.css";
 import { useNavigate } from "react-router-dom";
+import Modal from "./Components/Modal.jsx";
+import checkSession from "./Context/checkSession.jsx";
+
+
 
 const Login = () => {
   const [telefono, setTelefono] = useState("");
-  const [correo, setCorreo] = useState("");
+  const [contra, setContra] = useState("");
   const [departamento, setDepartamento] = useState("");
   const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [rememberDevice, setRememberDevice] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    checkSession(navigate); // Verificar sesión al cargar la página
+  }, [navigate]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    setShowModal(true);
+  };
+
+    const handleLogin = async (remember) => {
+      setShowModal(false);
+      setRememberDevice(remember); // Guardar la elección del usuario
 
     try {//https://api-condominios-noti.onrender.com/api/login http://localhost:4000/api/login
-      const response = await fetch('https://api-condominios-noti.onrender.com/api/login', {
+      const response = await fetch('http://localhost:4000/api/login', {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          
-        },
-        body: JSON.stringify({ telefono, correo, departamento }),
+        headers: {"Content-Type": "application/json" },
+        body: JSON.stringify({ telefono, contra, departamento, rememberDevice: remember }),
       });
 
       if (response.ok) {
         const data = await response.json();
         console.log("Datos recibidos:", data); // Verifica qué datos devuelve la API
 
-    
-
         // Guardar datos en localStorage
         localStorage.setItem("token", data.token);
         localStorage.setItem("departamento", data.departamento);
         localStorage.setItem("rol", data.rol);
-
         console.log("Token almacenado:", data.token);
         console.log("Rol almacenado:", data.rol);
 
+        if (data.permanentToken) {
+          localStorage.setItem("permanentToken", data.permanentToken);
+        }
+
         // Redirigir según el rol
-        navigate(data.rol === "admin" ? "/Dashboard" : "/dashboard_usuario");
+        navigate(data.rol === "admin" ? "/Dashboard" : data.rol === "usuario" ? "/dashboard_usuario" : "/dashboard_dueno");
 
       } else {
         const errorData = await response.json();
@@ -82,13 +96,13 @@ const Login = () => {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="correo">Correo:</label>
+            <label htmlFor="contra">Contraseña:</label>
             <input
-              type="email"
-              id="correo"
+              type="password"
+              id="contra"
               className="input-field"
-              value={correo}
-              onChange={(e) => setCorreo(e.target.value)}
+              value={contra}
+              onChange={(e) => setContra(e.target.value)}
             />
           </div>
           <div className="form-group">
@@ -107,6 +121,15 @@ const Login = () => {
           </button>
         </form>
       </div>
+      <Modal
+        show={showModal}
+        onClose={() => setShowModal(false)}
+        message="¿Quieres recordar este dispositivo?"
+        isSuccess={true}
+      >
+        <button onClick={() => handleLogin(true)}>Sí</button>
+        <button onClick={() => handleLogin(false)}>No</button>
+      </Modal>
     </div>
   );
 };

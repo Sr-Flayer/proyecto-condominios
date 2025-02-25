@@ -21,8 +21,8 @@ function RegistroUsuario() {
   const [departamento, setDepartamento] = useState('');
   const [departamentoError, setDepartamentoError] = useState(false);
 
-  const [correo, setCorreo] = useState('');
-  const [correoError, setCorreoError] = useState(false);
+  const [contra, setContra] = useState('');
+  const [contraError, setContraError] = useState(false);
 
   const [rol, setRol] = useState('');
   const [RolError, setRolError] = useState(false);
@@ -65,8 +65,8 @@ function RegistroUsuario() {
     setDepartamentoError(!departamento.trim());
   };
 
-  const validateCorreo = () => {
-    setCorreoError(!correo.trim());
+  const validateContra = () => {
+    setContraError(!contra.trim());
   };
 
   const validateRol = () => {
@@ -79,21 +79,22 @@ function RegistroUsuario() {
     validateApellido();
     validateTelefono();
     validateDepartamento();
-    validateCorreo();
+    validateContra();
     validateRol();
 
     // Verificar si hay errores después de las validaciones
-    if (nombreError || apellidoError || telefonoError || departamentoError || correoError || RolError) {
+    if (nombreError || apellidoError || telefonoError || departamentoError || contraError || RolError) {
       setMessage('Por favor, corrija los errores antes de enviar.');
       setVariant('error');
       return;
     }
 
     try {
-      const response = await fetch('https://api-condominios-noti.onrender.com/api/insertar_usuario', {
+      const response = await fetch('http://localhost:4000/api/insertar_usuario', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ nombre, apellido, telefono, departamento, correo, rol }),
+        headers: {'Authorization': `Bearer ${token}`,
+           'Content-Type': 'application/json' },
+        body: JSON.stringify({ nombre, apellido, telefono, departamento, contra, rol }),
       });
 
       if (response.ok) {
@@ -103,7 +104,7 @@ function RegistroUsuario() {
         setApellido('');
         setTelefono('');
         setDepartamento('');
-        setCorreo('');
+        setContra('');
         setRol('');
       } else {
         const data = await response.json();
@@ -208,13 +209,14 @@ function RegistroUsuario() {
             <Grid item xs={12}>
               <TextField
                 fullWidth
-                id="correo"
-                label="Correo"
-                value={correo}
-                onChange={(e) => setCorreo(e.target.value)}
-                onBlur={validateCorreo}
-                error={correoError}
-                helperText={correoError && 'El campo es obligatorio.'}
+                id="contra"
+                type= "password"
+                label="Contraseña"
+                value={contra}
+                onChange={(e) => setContra(e.target.value)}
+                onBlur={validateContra}
+                error={contraError}
+                helperText={contraError && 'El campo es obligatorio.'}
                 required
               />
             </Grid>
@@ -230,6 +232,7 @@ function RegistroUsuario() {
           >
             <MenuItem value="usuario">Usuario</MenuItem>
             <MenuItem value="admin">Admininstrador</MenuItem>
+            <MenuItem value="dueno">Dueño</MenuItem>
           </Select>
         </FormControl>
       </Grid>
