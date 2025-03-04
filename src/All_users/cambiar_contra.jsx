@@ -31,8 +31,9 @@ function Cambiar_contra() {
       const response = await fetch('https://api-condominios-noti.onrender.com/api/cambiar-contra', {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${ACCESS_TOKEN}`,
           'Content-Type': 'application/json',
+
         },
         body: JSON.stringify({ telefono, departamento, oldPassword, newPassword }),
       });
