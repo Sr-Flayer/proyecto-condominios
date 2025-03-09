@@ -37,6 +37,7 @@ function Dashboard() {
                             <Dropdown.Item as={Link} to="/Admin/registroUsuario">Administrador</Dropdown.Item>
                             <Dropdown.Item as={Link} to="/Administracion/gestionVivienda">Administración</Dropdown.Item>
                             <Dropdown.Item as={Link} to="/All_users/cambiar_contra">Cambiar Contraseña</Dropdown.Item>
+                            <Dropdown.Item as={Link} to="/All_users/recuperarContra">Recuperar Contraseña</Dropdown.Item>
 
                         </DropdownButton>
                     </Nav>

@@ -15,6 +15,7 @@ import Adeudo from './Inquilino/adeudo';
 import PortonesM from './Inquilino/portonesM';
 import Dashboardu from './dashboard_usuario';
 import Cambiar_contra from './All_users/cambiar_contra';
+import RecuperarContra from './All_users/recuperarContra';
 import './index.css';
 import Dashboard_dueno from './dashboard_dueno';
 
@@ -39,6 +40,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/Inquilino/portonesM" element={<PortonesM/>} />
         <Route path="/notificaciones/:departamento" element={<Notis />} />
         <Route path="/All_users/cambiar_contra" element={<Cambiar_contra />} />
+        <Route path="/All_users/recuperarContra" element={<RecuperarContra />} />
 
       </Routes>
     </BrowserRouter>
