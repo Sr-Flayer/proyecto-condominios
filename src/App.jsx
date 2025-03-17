@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
-import "./index.css";
+import React, { useState, useEffect, useRef } from "react";
+import { CSSTransition } from "react-transition-group";
 import { useNavigate } from "react-router-dom";
-import Modal from "./Components/Modal.jsx";
+import "./index.css";
 import checkSession from "./Context/checkSession.jsx";
-
-
+import PhoneField from "./Components/Phonefield.jsx";
 
 const Login = () => {
-  const [telefono, setTelefono] = useState("");
+  const [telefono, setTelefono] = useState("+52");
   const [contra, setContra] = useState("");
   const [departamento, setDepartamento] = useState("");
   const [error, setError] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [rememberDevice, setRememberDevice] = useState(false);
   const navigate = useNavigate();
+  const nodeRef = useRef(null);
 
-  useEffect(()=>{
-    checkSession(navigate); // Verificar sesión al cargar la página
+  useEffect(() => {
+    checkSession(navigate);
   }, [navigate]);
 
   const handleSubmit = async (e) => {
@@ -25,33 +25,27 @@ const Login = () => {
     setShowModal(true);
   };
 
-    const handleLogin = async (remember) => {
-      setShowModal(false);
-      setRememberDevice(remember); // Guardar la elección del usuario
+  const handleLogin = async (remember) => {
+    setShowModal(false);
+    setRememberDevice(remember);
 
-    try {//https://api-condominios-noti.onrender.com/api/login http://localhost:4000/api/login
+    try {
       const response = await fetch('https://api-condominios-noti.onrender.com/api/login', {
         method: "POST",
-        headers: {"Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ telefono, contra, departamento, rememberDevice: remember }),
       });
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Datos recibidos:", data); // Verifica qué datos devuelve la API
-
-        // Guardar datos en localStorage
         localStorage.setItem("token", data.token);
         localStorage.setItem("departamento", data.departamento);
         localStorage.setItem("rol", data.rol);
-        console.log("Token almacenado:", data.token);
-        console.log("Rol almacenado:", data.rol);
 
         if (data.permanentToken) {
           localStorage.setItem("permanentToken", data.permanentToken);
         }
 
-        // Redirigir según el rol
         navigate(data.rol === "admin" ? "/Dashboard" : data.rol === "usuario" ? "/dashboard_usuario" : "/dashboard_dueno");
 
       } else {
@@ -116,20 +110,28 @@ const Login = () => {
             />
           </div>
           {error && <p className="error-message">{error}</p>}
-          <button type="submit" className="submit-button">
-            Iniciar sesión
-          </button>
+          <button type="submit" className="submit-button">Iniciar sesión</button>
         </form>
       </div>
-      <Modal
-        show={showModal}
-        onClose={() => setShowModal(false)}
-        message="¿Quieres recordar este dispositivo?"
-        isSuccess={true}
-      >
+
+      {/* Modal */}
+      <CSSTransition
+  in={showModal}
+  timeout={300}
+  classNames="modal"
+  unmountOnExit
+  nodeRef={nodeRef}
+>
+  <div className="modal-overlay" ref={nodeRef} onClick={() => setShowModal(false)}>
+    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+      <h2>¿Quieres recordar este dispositivo?</h2>
+      <div className="modal-actions">
         <button onClick={() => handleLogin(true)}>Sí</button>
         <button onClick={() => handleLogin(false)}>No</button>
-      </Modal>
+      </div>
+    </div>
+  </div>
+</CSSTransition>
     </div>
   );
 };

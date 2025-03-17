@@ -15,7 +15,7 @@ function RegistroUsuario() {
   const [apellido, setApellido] = useState('');
   const [apellidoError, setApellidoError] = useState(false);
 
-  const [telefono, setTelefono] = useState('');
+  const [telefono, setTelefono] = useState('+52');
   const [telefonoError, setTelefonoError] = useState(false);
 
   const [departamento, setDepartamento] = useState('');
