@@ -3,7 +3,6 @@ import { CSSTransition } from "react-transition-group";
 import { useNavigate } from "react-router-dom";
 import "./index.css";
 import checkSession from "./Context/checkSession.jsx";
-import PhoneField from "./Components/Phonefield.jsx";
 
 const Login = () => {
   const [telefono, setTelefono] = useState("+52");
