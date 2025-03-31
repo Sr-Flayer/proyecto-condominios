@@ -1,52 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Dropdown, DropdownButton } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { Container, Box, Typography, TextField, Button, Alert, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { Container, Box, Grid, Typography, TextField, Button, Alert, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import NotificationButton from '../NotificationButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Cambiar_contra() {
+  const [telefono, setTelefono] = useState('+52');
+  const [departamento, setDepartamento] = useState('');
+  const [oldPassword, setOldPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [message, setMessage] = useState('');
   const [variant, setVariant] = useState('success');
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
   const [openModal, setOpenModal] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
+    const storedToken = localStorage.getItem("token");
     if (storedToken) {
       setToken(storedToken);
     } else {
-      navigate('/');
+      navigate("/");
     }
   }, [navigate]);
 
-  const handleChangePassword = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (newPassword !== confirmPassword) {
-      setMessage('Las contraseñas no coinciden.');
-      setVariant('error');
-      return;
-    }
-
     try {
       const response = await fetch('https://api-condominios-noti.onrender.com/api/cambiar-contra', {
         method: 'POST',
         headers: {
-          Authorization: `Bearer ${token}`, // Se eliminó la coma y ACCESS_TOKEN no declarado
+          'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ newPassword }),
+        body: JSON.stringify({ telefono, departamento, oldPassword, newPassword }),
       });
 
-      const data = await response.json();
       if (response.ok) {
         setMessage('Contraseña actualizada exitosamente.');
         setVariant('success');
         setOpenModal(true); // Abrir el modal de confirmación
       } else {
+        const data = await response.json();
         setMessage(data.message || 'Error al actualizar la contraseña.');
         setVariant('error');
       }
@@ -63,12 +59,12 @@ function Cambiar_contra() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userId: token }), // Se cambió telefono a token
+        body: JSON.stringify({ userId: telefono }),
       });
-      localStorage.removeItem('permanentToken');
-      navigate('/');
+      localStorage.removeItem("permanentToken");
+      navigate("/");
     } catch (error) {
-      console.error('Error al cerrar sesión en todos los dispositivos', error);
+      console.error("Error al cerrar sesión en todos los dispositivos", error);
     }
   };
 
@@ -83,33 +79,32 @@ function Cambiar_contra() {
           </DropdownButton>
         </Dropdown>
         <Nav className="ms-auto">
-          {typeof departamento !== 'undefined' && <NotificationButton departamento={departamento} />}
+          {departamento && <NotificationButton departamento={departamento} />}
         </Nav>
       </Navbar>
 
-      <Container component="main" maxWidth="xs">
-        <Box sx={{ mt: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-          <Typography component="h1" variant="h5">Cambiar Contraseña</Typography>
-          <Box component="form" noValidate onSubmit={handleChangePassword} sx={{ mt: 3 }}>
-            <TextField
-              fullWidth
-              type="password"
-              label="Nueva Contraseña"
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              required
-            />
-            <TextField
-              fullWidth
-              type="password"
-              label="Confirmar Contraseña"
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-              sx={{ mt: 2 }}
-            />
+      <Container component="main" maxWidth="sm">
+        <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <Typography component="h1" variant="h5" gutterBottom>
+            Cambiar Contraseña
+          </Typography>
+          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <TextField fullWidth label="Teléfono" value={telefono} onChange={(e) => setTelefono(e.target.value)} required />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField fullWidth label="Departamento" value={departamento} onChange={(e) => setDepartamento(e.target.value)} required />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField fullWidth type="password" label="Contraseña Actual" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} required />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField fullWidth type="password" label="Nueva Contraseña" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} required />
+              </Grid>
+            </Grid>
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
-              Actualizar Contraseña
+              Cambiar Contraseña
             </Button>
           </Box>
           {message && <Alert severity={variant} sx={{ mt: 2 }}>{message}</Alert>}

@@ -50,10 +50,10 @@ function Multas() {
     setLoading(true);
 
     
-    
+    //https://api-condominios-noti.onrender.com
     try {
       const response = await fetch(
-        "https://api-condominios-noti.onrender.com/api/insertar_multas",
+        "http://localhost:4000/api/insertar_multas",
         {
           method: "POST",
           headers: { 'Authorization': `Bearer ${token}`, 
